@@ -18,14 +18,16 @@ int read_dir(char *pth) {
             if (strcmp(file->d_name, ".") == 0 || strcmp(file->d_name, "..") == 0) {
                 continue;
             } else {
-                memset(tmp_path, 0x0, sizeof(tmp_path));
-                memset(cmd, 0x0, sizeof(cmd));
-                strncpy(tmp_path, path, strlen(path));
-                strncat(tmp_path, "/", 1);
-                strncat(tmp_path, file->d_name, strlen(file->d_name));
-                sprintf(cmd, "echo \"`sed 's/,//g' %s`\" > %s", tmp_path, tmp_path);
-                printf("cmd: %s\n", cmd);
-                system(cmd);
+                if (strnstr(file->d_name, ".", 1) == NULL) {
+                    memset(tmp_path, 0x0, sizeof(tmp_path));
+                    memset(cmd, 0x0, sizeof(cmd));
+                    strncpy(tmp_path, path, strlen(path));
+                    strncat(tmp_path, "/", 1);
+                    strncat(tmp_path, file->d_name, strlen(file->d_name));
+                    sprintf(cmd, "echo \"`sed 's/,//g' %s`\" > %s", tmp_path, tmp_path);
+                    printf("cmd: %s\n", cmd);
+                    system(cmd);
+                }
             }
         }
     } else {
