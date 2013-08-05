@@ -18,7 +18,7 @@ int read_dir(char *pth) {
             if (strcmp(file->d_name, ".") == 0 || strcmp(file->d_name, "..") == 0) {
                 continue;
             } else {
-                if (strnstr(file->d_name, ".", 1) == NULL) {
+                if (strnstr(file->d_name, ".", 1) == NULL && strstr(file->d_name, "txt") != NULL) {
                     memset(tmp_path, 0x0, sizeof(tmp_path));
                     memset(cmd, 0x0, sizeof(cmd));
                     strncpy(tmp_path, path, strlen(path));
