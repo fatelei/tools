@@ -11,6 +11,10 @@ function process_job (clientsMap, job, client, callback) {
         setTimeout(function() {
             callback(client, job);
         }, 1000);
+    } else {
+        client.release(job.id).onSuccess(function (data) {
+            client.disconnect();
+        });
     }
 }
 
