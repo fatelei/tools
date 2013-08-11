@@ -5,15 +5,16 @@ var http = require("http");
 var server = http.createServer(app);
 var io = require("socket.io").listen(server);
 var watch_event = require("./events");
-var clients = {}
+var clientsMap = {};
+var socketsMap = {};
 
 io.sockets.on("connection", function (socket) {
     console.log(socket.id + ": connected");
     socket.on("ok", function (data) {
-        clients[data.id] = socket;
-        console.log(clients);
+        clientsMap[data.id] = socket;
+        socketsMap[socket.id] = data.id;
         function start_push() {
-            watch_event.emit("push", clients);
+            watch_event.emit("push", clientsMap);
             setTimeout(function () {
                 start_push();
             }, 1000);
@@ -21,19 +22,15 @@ io.sockets.on("connection", function (socket) {
         start_push();
     });
     socket.on("disconnect", function () {
-        for (var id in clients) {
-            if (clients[id] === socket) {
-                delete clients[id];
-                break;
-            }
-        }
-        console.log(clients);
+        delete clientsMap[socketsMap[socket.id]];
+        delete socketsMap[socket.id];
     });
 });
 
 
 
+server.listen(8000);
 
-module.exports = server;
+//module.exports = server;
 
 

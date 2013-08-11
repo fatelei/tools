@@ -3,9 +3,9 @@
 var EventEmitter = require("events").EventEmitter;
 var events = new EventEmitter();
 
-events.on("push", function (socket) {
+events.on("push", function (clientsMap) {
     var watch_cb = require("./task");
-    watch_cb(socket);
+    watch_cb(clientsMap);
 });
 
 module.exports = events;
