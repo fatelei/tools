@@ -6,16 +6,20 @@ var settings = require("./settings");
 
 function process_job (clientsMap, job, client, callback) {
     var data = JSON.parse(job.data);
+    console.log(data);
     if (data.id in clientsMap) {
         clientsMap[data.id].emit("notification", data.msg);
-        setTimeout(function() {
-            callback(client, job);
-        }, 1000);
+        callback(client, job);
     } else {
-        client.release(job.id).onSuccess(function (data) {
-            client.disconnect();
-        });
+        if (data.id) {
+            client.release(job.id).onSuccess(function (data) {
+                client.disconnect();
+            });
+        } else {
+            callback(client, job);
+        }
     }
+    client.disconnect();
 }
 
 var del_cb = function (client, job) {

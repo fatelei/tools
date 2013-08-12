@@ -9,9 +9,6 @@ var numCPUs = os.cpus().length;
 var workers = {};
 
 if (cluster.isMaster) {
-    cluster.on("online", function (worker) {
-        console.log(worker.id +":online");
-    });
     cluster.on("exit", function (worker, code, signal) {
         var exitCode = worker.process.exitCode;
         console.log("worker " + worker.process.pid + " died (" + exitCode + "). restarting...");
