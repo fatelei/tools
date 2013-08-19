@@ -10,13 +10,16 @@ function process_job (clientsMap, job, client, callback) {
     if (data.id in clientsMap) {
         clientsMap[data.id].emit("notification", data.msg);
         callback(client, job);
+        return;
     } else {
         if (data.id) {
             client.release(job.id).onSuccess(function (data) {
                 client.disconnect();
+                return;
             });
         } else {
             callback(client, job);
+            return;
         }
     }
     client.disconnect();
