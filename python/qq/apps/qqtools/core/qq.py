@@ -140,5 +140,5 @@ class QQ(object):
 
 if __name__ == "__main__":
     qq = QQ()
-    qq.qq_login('1443343615', 'k7yeqs&fate')
-    qq.publish_qq_mood('1443343615')
+    qq.qq_login('xx', 'xx')
+    qq.publish_qq_mood('xx')
