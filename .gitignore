@@ -1,1 +1,9 @@
 *.txt
+.DS_Store
+node_modules
+eggs
+parts
+bin
+develop-eggs
+*.egg-info
+*.pyc
