@@ -10,6 +10,7 @@ from lxml import etree
 from lxml.html import fromstring
 from copy import deepcopy
 from urlparse import urlparse
+from requests.exceptions import ConnectionError, Timeout
 
 from qqtools.common.macro import QQ_URL, LOGIN_POST_TEMPLATE, QQCHAT_URL, CHAT_POST_TEMPLATE,\
     QQHEARTBEAT_URL, QQCHAT_URLS, QQ_SEND_MSG_TEMPLATE, MOOD_TEMPLATE, PUBLISH_MOOD_URL,\
@@ -88,7 +89,13 @@ class QQ(object):
         post_data = deepcopy(LOGIN_POST_TEMPLATE)
         post_data['qq'] = qq_no
         post_data['pwd'] = qq_pwd
-        resp = requests.post(login_url, headers=self.headers, data=post_data)
+        try:
+            resp = requests.post(login_url, headers=self.headers, data=post_data)
+        except ConnectionError as e:
+            resp = requests.post(login_url, headers=self.headers, data=post_data)
+        except Timeout as e:
+            resp = requests.post(login_url, headers=self.headers, data=post_data)
+
         if resp.status_code == 200:
             sid = self.get_qq_sid(resp)
             self.clients[qq_no] = sid
@@ -107,7 +114,12 @@ class QQ(object):
         chat_login_url = self.parse_chat_url(resp.text)
         post_data = deepcopy(CHAT_POST_TEMPLATE)
         post_data['3gqqsid'] = qqsid
-        resp = requests.post(chat_url, headers=self.headers, data=post_data)
+        try:
+            resp = requests.post(chat_url, headers=self.headers, data=post_data)
+        except ConnectionError as e:
+            resp = requests.post(chat_url, headers=self.headers, data=post_data)
+        except Timeout as e:
+            resp = requests.post(chat_url, headers=self.headers, data=post_data)
         status_code = resp.status_code
         if status_code == 200:
             logging.info("chatlogin ok")
@@ -122,7 +134,12 @@ class QQ(object):
         """
         sid = self.clients[qq_no]
         refresh_url = QQHEARTBEAT_URL.format(sid)
-        resp = requests.get(refresh_url)
+        try:
+            resp = requests.get(refresh_url)
+        except ConnectionError as e:
+            resp = requests.get(refresh_url)
+        except Timeout as e:
+            resp = requests.get(refresh_url)
         if resp.status_code != 200:
             logging.warning(resp.text)
 
