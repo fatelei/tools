@@ -49,14 +49,19 @@ MOOD_TEMPLATE = {
 	"sid": ""
 }
 
+HEARTBEAT_INTERVAL = 60
+
 QQ_URL = "http://pt.3g.qq.com/s?aid=nLogin"
 
 QQCHAT_URL = "http://pt.3g.qq.com/s?aid=nLogin3gqq&auto=1&sid={0}"
 
-QQHEARTBEAT_URL = "http://q16.3g.qq.com/g/s?sid={0}&s=10&aid=chgStatus"
+QQHEARTBEAT_URL = "http://pt.3g.qq.com/s?aid=nLogin3gqqbysid&3gqqsid={0}"
 
 QQCHAT_URLS = ["http://q16.3g.qq.com/g/s?sid={0}",
 			   "http://q32.3g.qq.com/g/s?sid={0}"]
 
+QQRECV_MSG_URL = "http://q32.3g.qq.com/g/s?sid={0}&aid=nqqChat&u={1}&g_f=1660"
+
 PUBLISH_MOOD_URL = "http://m.qzone.com/mood/publish_mood"
 
+QQ_LOGOUT_URL = "http://pt.3g.qq.com/s?sid={0}&aid=nLogout"

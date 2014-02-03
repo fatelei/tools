@@ -8,3 +8,5 @@ develop-eggs
 *.egg-info
 *.pyc
 .installed.cfg
+logs
+*.log

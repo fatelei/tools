@@ -2,7 +2,7 @@
 
 var io = require("socket.io-client");
 
-var socket = io.connect("http://api.notification.com");
+var socket = io.connect("http://api.noti.com");
 
 socket.on("connect", function () {
     console.log("connect server successfully");
